@@ -1,0 +1,48 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pytest-jubilant-extension-mesh"
+dynamic = ["version"]
+description = "Service mesh extension for pytest-jubilant"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "pytest-jubilant-extension-meta @ git+https://github.com/adhityaravi/pytest-jubilant-extension-meta.git@main",
+    "jubilant",
+]
+license = "Apache-2.0"
+
+[tool.hatch.version]
+path = "pytest_jubilant_extension_mesh/__init__.py"
+
+[project.urls]
+Homepage = "https://github.com/canonical/pytest-jubilant-extension-mesh"
+Issues = "https://github.com/canonical/pytest-jubilant-extension-mesh/issues"
+Repository = "https://github.com/canonical/pytest-jubilant-extension-mesh"
+
+[project.entry-points."pytest_jubilant.extensions"]
+mesh = "pytest_jubilant_extension_mesh.mesh:MeshExtension"
+
+[tool.uv]
+dev-dependencies = [
+    "pytest>=8.3.5",
+    "pytest-cov>=4.0.0",
+    "ruff>=0.1.0",
+    "mypy>=1.5.0",
+]
+
+[tool.ruff]
+line-length = 99
+target-version = "py38"
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "N", "B", "UP", "C4", "ISC", "PIE", "T20", "PYI", "PT", "RUF"]
+ignore = ["E501", "UP007"]
+
+[tool.mypy]
+python_version = "3.8"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
