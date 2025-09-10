@@ -20,9 +20,6 @@ try:
         def name(self) -> str:
             return "mesh"
         
-        @property
-        def cli_option(self) -> str:
-            return "meshify"
         
         @property
         def help_text(self) -> str:
@@ -60,13 +57,16 @@ try:
             kwargs['trust'] = True
             return kwargs
         
-        def post_deploy_hook(self, juju, app_name: str, charm) -> None:
+        def post_deploy_hook(self, juju, app: str, charm) -> None:
             """Auto-integrate mesh-capable apps to istio beacon."""
+            
+            app = app or self._get_charm_name(charm)
+
             if not hasattr(juju, 'mesh_enabled') or not juju.mesh_enabled:
                 return
                 
-            if self._mesh_endpoint_exists(juju, app_name):
-                self._integrate_to_beacon(juju, app_name)
+            if self._mesh_endpoint_exists(juju, app):
+                self._integrate_to_beacon(juju, app)
         
         def _mesh_endpoint_exists(self, juju, app: str) -> bool:
             """Check if app has service-mesh endpoint."""
