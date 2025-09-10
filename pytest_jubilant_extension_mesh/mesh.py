@@ -57,7 +57,7 @@ try:
             kwargs['trust'] = True
             return kwargs
         
-        def post_deploy_hook(self, juju, app: str, charm) -> None:
+        def post_deploy_hook(self, juju, app: str, charm: str | Path) -> None:
             """Auto-integrate mesh-capable apps to istio beacon."""
             
             app = app or self._get_charm_name(charm)
@@ -91,7 +91,6 @@ try:
             return charm_file.rsplit('_', 1)[0]
 
 except ImportError:
-    # Dependencies not available
     class MeshExtension:
         def __init__(self):
             raise ImportError(
